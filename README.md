@@ -8,7 +8,3 @@
 - Komponen yang tersedia: [expo](https://docs.expo.dev/versions/latest/), [React Native](https://reactnative.dev/docs/intro-react-native-components)
 - Flex styling (https://reactnative.dev/docs/flexbox)
 - ScrollView vs FlatList (https://reactnative.dev/docs/next/scrollview)
-
-## Notes
-
-- [challenge](https://docs.google.com/document/d/1w5zYf8UJaVE-14MjyrFb8OAM7PWIaVOd/edit)
