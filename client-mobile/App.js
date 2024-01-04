@@ -5,6 +5,7 @@ import {
   Text,
   View,
   Button,
+  Platform,
   Image,
   ScrollView,
   FlatList,
@@ -15,77 +16,72 @@ export default function App() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    fetchPost();
+    fetch("https://jsonplaceholder.typicode.com/posts")
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data, "<<< data");
+        setPosts(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
-  async function fetchPost() {
-    try {
-      const response = await fetch(
-        "https://jsonplaceholder.typicode.com/posts"
-      );
-      if (!response.ok) {
-        throw new Error("error nih");
-      }
-      const responseJSON = await response.json();
-      setPosts(responseJSON);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  // console.log(posts, "<<< post");
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>
-        {/* <View style={styles.container}>
-          <Text style={[styles.heading, styles.textUnderline]}>
-            Hacktiv8 Phase 3
-          </Text>
+        <View style={styles.container}>
+          {/* <Text style={styles.heading}>Hacktiv8 Phase 3</Text>
+          <Text>Introduction React Native</Text>
           <Button
-            title="Click me"
-            onPress={() => {
-              console.log("button di click");
+            title={`Button Nih di ${Platform.OS}`}
+            onPress={(event) => {
+              // console.log(event, "<<< event");
+              console.log("button nih ke press");
             }}
-            style={{ color: "pink" }}
           />
-          <StatusBar style="auto" />
-        </View> */}
-        <View style={{ flex: 1 }}>
-          <View style={{ flex: 1, flexDirection: "row" }}>
+          <StatusBar style="auto" /> */}
+
+          <View
+            style={{ flex: 1, backgroundColor: "orange", flexDirection: "row" }}
+          >
             <View style={{ flex: 1, backgroundColor: "white" }}>
               <Image
-                source={{
-                  uri: "https://reactnative.dev/img/tiny_logo.png",
+                style={{
+                  width: "100%",
+                  height: "100%",
                 }}
-                style={{ height: "100%", width: "100%", resizeMode: "contain" }}
+                source={{
+                  uri: "https://east.vc/wp-content/uploads/2020/01/hacktiv8-1.png",
+                }}
               />
             </View>
-            <View style={{ flex: 2 }}>
-              <Text style={styles.heading}>Hacktiv8 Phase 3</Text>
+            <View style={{ flex: 2, backgroundColor: "yellow" }}>
+              <View style={{ padding: 20 }}>
+                <Text style={[styles.heading, { fontStyle: "italic" }]}>
+                  Hacktiv8
+                </Text>
+                <Text>Lorem ipsum bla bla bla</Text>
+              </View>
             </View>
           </View>
-          <View style={{ flex: 3, backgroundColor: "tomato" }}>
+          <View style={{ flex: 3, backgroundColor: "pink" }}>
             <ScrollView>
-              {posts.map((post, index) => (
-                <Text key={post.id} style={{ margin: 10, fontSize: 20 }}>
-                  {index} - {post.title}
+              {posts.map((post) => (
+                <Text key={post.id} style={{ fontSize: 15, margin: 5 }}>
+                  {" "}
+                  - {post.title}
                 </Text>
               ))}
             </ScrollView>
           </View>
-          <View style={{ flex: 3, backgroundColor: "pink" }}>
+          <View style={{ flex: 3, backgroundColor: "teal" }}>
             <FlatList
               data={posts}
-              renderItem={({ item, index }) => {
-                return (
-                  <Text style={{ margin: 10, fontSize: 20 }}>
-                    {" "}
-                    {index} - {item.title}
-                  </Text>
-                );
-              }}
+              renderItem={({ item }) => (
+                <Text style={{ fontSize: 15, margin: 5 }}> - {item.title}</Text>
+              )}
               keyExtractor={(item) => item.id}
-              // horizontal
             />
           </View>
         </View>
@@ -97,16 +93,12 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "pink",
+    backgroundColor: "tomato",
     // alignItems: "center",
     // justifyContent: "center",
   },
   heading: {
-    fontSize: 24,
+    fontSize: 20, // dpi dot per inch
     fontWeight: "bold",
-    // color: "red",
-  },
-  textUnderline: {
-    textDecorationLine: "underline",
   },
 });
